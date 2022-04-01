@@ -1,7 +1,6 @@
 import React from 'react';
 
-const OrderList = (props) => {
-    const { orders } = props;
+const OrderList = ({ orders }) => {
 
     let count = 0;
     for (const item of orders) {

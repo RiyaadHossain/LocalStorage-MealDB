@@ -30,20 +30,20 @@ const Restaurant = () => {
         setOrders(savedItem)
     }, [meals])
     
-    const makeOrder = id => {
+    const makeOrder = meal => {
         let newOrder = []
-        const exist = orders.find(order => order.idMeal === id.idMeal)
+        const exist = orders.find(order => order.idMeal === meal.idMeal)
         if (!exist) {
-            id.quantity = 1;
-            newOrder = [...orders, id]
+            meal.quantity = 1;
+            newOrder = [...orders, meal]
         } else {
-            const rest = orders.filter(order => order.idMeal !== id.idMeal)
+            const rest = orders.filter(order => order.idMeal !== meal.idMeal)
             const newQuantity = exist.quantity + 1
             exist.quantity = newQuantity
             newOrder = [...rest, exist]
         }
         setOrders(newOrder)
-        addToDb(id.idMeal)
+        addToDb(meal.idMeal)
     }
     return (
         <div className="restaurant-menu">
