@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { addToDb, getStoredCart } from '../../utilities/fakedb';
 import Meal from '../Meal/Meal';
 import OrderList from '../OrderList/OrderList';
 import './Restaurant.css';
@@ -12,10 +13,23 @@ const Restaurant = () => {
             .then(res => res.json())
             .then(data => setMeals(data.meals));
     }, []);
+    // Use Another useEffect to display data from the Database -
+    useEffect(() => {
+        const storedMeal = getStoredCart()
+        let savedItem = []
+        for (const id in storedMeal) {
+            const previousMeal = meals.find(meal => meal.idMeal === id)
+            if (previousMeal) {
+                savedItem.push(previousMeal)
+            }
+        }
+        setOrders(savedItem)
+    }, [meals])
     
     const makeOrder = id => {
         const newOrder = [...orders, id]
         setOrders(newOrder)
+        addToDb(id.idMeal)
     }
     return (
         <div className="restaurant-menu">
